@@ -651,6 +651,55 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &663906612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 663906614}
+  - component: {fileID: 663906613}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &663906613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663906612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049c44318249b3046ae32073bd9c974a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GemsOfPoolVariable: 1
+  gemTypes:
+  - {fileID: 11400000, guid: 806212710a571544ab6b4bdeefc5c3b8, type: 2}
+  - {fileID: 11400000, guid: c0585d90e864cb045ad6b5d7e05ed7df, type: 2}
+  - {fileID: 11400000, guid: 83310601443215b43a503169e5776078, type: 2}
+--- !u!4 &663906614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663906612}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.73, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &697980566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1675,6 +1724,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cell: {fileID: 4301069391894932392, guid: 62fa6bf346eb47d49badf90ed91cb458, type: 3}
-  cellMaterial: {fileID: 0}
-  fieldLine: 6
+  cellMaterial: {fileID: 2100000, guid: 2a3886737f53d71458a0928657cfa3d3, type: 2}
+  fieldLine: 4
   fieldColumn: 6
+  offSetLine: 1.5
+  offSetColumn: 1.5
+--- !u!1 &2109574355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2109574356}
+  - component: {fileID: 2109574357}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2109574356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109574355}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2109574357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109574355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049c44318249b3046ae32073bd9c974a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GemsOfPoolVariable: 0
+  gemTypes:
+  - {fileID: 11400000, guid: 806212710a571544ab6b4bdeefc5c3b8, type: 2}
+  - {fileID: 11400000, guid: c0585d90e864cb045ad6b5d7e05ed7df, type: 2}
+  - {fileID: 11400000, guid: 83310601443215b43a503169e5776078, type: 2}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d0f9cfca456654fbfa778f11079f7b, type: 3}
+  m_Name: Gem1
+  m_EditorClassIdentifier: 
+  MaterialOfGem: {fileID: -1360991219368177298, guid: 571e9c7fe681c8d45a6cd5258914ade5, type: 3}
+  MeshOfGem: {fileID: 4126542436946315128, guid: 571e9c7fe681c8d45a6cd5258914ade5, type: 3}
+  GemName: Emerald
+  GrowdedGemScale: {x: 0.25, y: 0.25, z: 0.25}
+  EndGemScale: {x: 1, y: 1, z: 1}
+  GrowTime: 25
+  BeginPrice: 0
