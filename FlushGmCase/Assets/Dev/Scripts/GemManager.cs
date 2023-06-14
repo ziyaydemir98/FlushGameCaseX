@@ -7,24 +7,20 @@ using DG.Tweening;
 
 public class GemManager : MonoBehaviour
 {
-    public enum GemsOfPool { FieldPool, BagPool }
-    public GemsOfPool GemsOfPoolVariable;
-
+    #region Variables
     [SerializeField] List<GemTypes> gemTypes;
-
-    [NonSerialized] public bool Growded;
-    [NonSerialized] public float Price;
+    public bool Growded;
+    public float Price;
     private float _growTiming;
-
+    private CellManager _cellManager;
     int _randomValue;
-    private void OnEnable()
-    {
+    #endregion
 
-        SetupGem();
-    }
-    private void SetupGem()
+    #region Gem Functions
+    public void SetupGem()
     {
         ResetGem();
+        _cellManager = transform.GetComponentInParent<CellManager>();
         _randomValue = UnityEngine.Random.Range(0, gemTypes.Count);
         MeshRenderer meshRenderer = gameObject.AddComponent<MeshRenderer>();
         MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
@@ -33,55 +29,35 @@ public class GemManager : MonoBehaviour
         gameObject.name = gemTypes[_randomValue].GemName;
         _growTiming = gemTypes[_randomValue].GrowTime;
         Price = gemTypes[_randomValue].BeginPrice;
-        switch (GemsOfPoolVariable)
-        {
-            case GemsOfPool.FieldPool:
-                StartCoroutine(GemGrow(_randomValue));
-                break;
-        }
+
+        StartCoroutine(GrowGem(gemTypes[_randomValue].TargetScale,_growTiming));
     }
     private void ResetGem()
     {
-        switch (GemsOfPoolVariable)
-        {
-            case GemsOfPool.FieldPool:
-                transform.localPosition = Vector3.zero;
-                transform.localScale = Vector3.zero;
-                Growded = false;
-                break;
-            case GemsOfPool.BagPool:
-                transform.localPosition = new Vector3(0, 1, 0);
-                transform.localScale = Vector3.one;
-                Growded = true;
-                break;
-        }
-        
+        transform.localPosition = Vector3.zero;
+        transform.localScale = Vector3.zero;
+        Growded = false;
     }
+    #endregion
+
     #region Grow Coroutine Functions
-    private IEnumerator GemGrow(int count)
+    private IEnumerator GrowGem(Vector3 target, float time)
     {
-        StartCoroutine(FirstPhase(count));
-        yield return new WaitForSeconds(_growTiming);
-        Debug.Log("FAZ 1 VE 2 TAMAMLANDI");
-        StopCoroutine(GemGrow(count));
-    }
-    private IEnumerator FirstPhase(int count)
-    {
-        transform.DOScale(gemTypes[count].GrowdedGemScale, _growTiming * 0.25f);
-        transform.DOMoveY(gemTypes[count].GrowdedGemScale.y, _growTiming * 0.25f);
-        yield return new WaitForSeconds(_growTiming * 0.25f);
+        transform.DOScale(target, time);
+        transform.DOMoveY(target.y, time);
+        yield return new WaitForSeconds(time * 0.25f);
         Growded = true;
-        Debug.Log("FAZ 1 TAMAMLANDI");
-        StartCoroutine(SecondPhase(count));
-        StopCoroutine(FirstPhase(count));
+        _cellManager.Collectable = Growded;
+        yield return new WaitForSeconds(time * 0.75f);
+        StopCoroutine(GrowGem(target, time));
     }
-    private IEnumerator SecondPhase(int count)
+    public void StopGrow()
     {
-        transform.DOScale(gemTypes[count].EndGemScale, _growTiming * 0.75f);
-        transform.DOMoveY(gemTypes[count].EndGemScale.y, _growTiming * 0.75f);
-        yield return new WaitForSeconds(_growTiming * 0.75f);
-        Debug.Log("FAZ 2 TAMAMLANDI");
-        StopCoroutine(SecondPhase(count));
+        if (Growded)
+        {
+            transform.DOKill();
+        }
+        else return;
     }
     #endregion
 

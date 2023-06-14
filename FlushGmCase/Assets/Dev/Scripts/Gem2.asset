@@ -15,7 +15,6 @@ MonoBehaviour:
   MaterialOfGem: {fileID: 6271573414225017425, guid: 0e221d4f804a7684aa10655d3ad7a75d, type: 3}
   MeshOfGem: {fileID: -4577554125874261984, guid: 0e221d4f804a7684aa10655d3ad7a75d, type: 3}
   GemName: Ruby
-  GrowdedGemScale: {x: 0.25, y: 0.25, z: 0.25}
-  EndGemScale: {x: 1, y: 1, z: 1}
+  TargetScale: {x: 1, y: 1, z: 1}
   GrowTime: 25
   BeginPrice: 0

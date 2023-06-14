@@ -15,7 +15,6 @@ MonoBehaviour:
   MaterialOfGem: {fileID: -1360991219368177298, guid: 571e9c7fe681c8d45a6cd5258914ade5, type: 3}
   MeshOfGem: {fileID: 4126542436946315128, guid: 571e9c7fe681c8d45a6cd5258914ade5, type: 3}
   GemName: Emerald
-  GrowdedGemScale: {x: 0.25, y: 0.25, z: 0.25}
-  EndGemScale: {x: 1, y: 1, z: 1}
+  TargetScale: {x: 1, y: 1, z: 1}
   GrowTime: 25
   BeginPrice: 0

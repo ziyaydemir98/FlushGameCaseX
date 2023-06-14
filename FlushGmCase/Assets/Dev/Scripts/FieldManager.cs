@@ -5,46 +5,50 @@ using UnityEngine;
 public class FieldManager : MonoBehaviour
 {
     [Header("Cell Properties")]
-    [SerializeField] GameObject cell;
-    [SerializeField] Material cellMaterial;    
+    [SerializeField] CellManager cellPrefab;
+    [SerializeField] Material cellMaterial;
     [SerializeField] int fieldLine;
     [SerializeField] int fieldColumn;
-    [SerializeField] float offSetLine;
-    [SerializeField] float offSetColumn;
+    [SerializeField] float offSetLineBetween;
+    [SerializeField] float offSetColumnBetween;
 
     private List<CellManager> _cells = new List<CellManager>();
     private void Start()
     {
         GridCreate();
+        IntroductionCell();
     }
     private void GridCreate()
     {
-        GameObject cellParent = new GameObject("CellField"); // Parent nesnesi oluşturulur
-        cellParent.transform.SetParent(transform);
-        cellParent.transform.localPosition = Vector3.zero;
-
-        for (int a = 0; a < fieldLine; a++) // Satır oluşumu
+        for (int a = 0; a < fieldLine; a++)
         {
-            for (int b = 0; b < fieldColumn; b++) // Sütun oluşumu
-            {
-                GameObject newCell = Instantiate(cell, cellParent.transform); // Hücre prefabı parent nesnesi altında oluşturulur
-                float posX = b * offSetColumn - ((fieldColumn - 1) * offSetColumn / 2f);
-                float posZ = a * offSetLine - ((fieldLine - 1) * offSetLine / 2f);
-                newCell.transform.localPosition = new Vector3(posX, transform.position.y, posZ);
-                GetMaterial(newCell);
-                _cells.Add(newCell.GetComponent<CellManager>()); // Oluşturulan hücreler, hücre listesine atılıyor.
-            }
-        }
-        // Tarla hücrelerinin toplam satır sayısını ikiye bölüyorum.
-        // Prefab dosyasını Instantiate edip child hale getiriyorum.
-        // Child objeye atamak üzere Vector3 tipinde bir değişken tanımlıyorum. Sütunun başlayacağı konumu kaydırıyorum.
-        // Buradaki amacım Tarla herhangi bir NxN boyutunde yapılmak istendiğinde Parent objeye her zaman ortalı bir şekilde oluşacak.
-        // Grid icerisindeki Cell prefabinin Scale'ine gore ortalama yapiyorum.
-    }
-    private void GetMaterial(GameObject obj)
-    {
+            CellManager cellOfLine = Instantiate(cellPrefab, transform);
+            Vector3 cellLocalScale = cellOfLine.CellBox.transform.localScale;
+            float _posZBeginLine = ((fieldLine * cellLocalScale.z) / 2f) + (((fieldLine - 1f) * offSetLineBetween) / 2f);
+            float _posXBeginLine = ((fieldColumn * cellLocalScale.x) / 2f) + (((fieldColumn - 1f) * offSetColumnBetween) / 2f);
+            Vector3 _lineBegin = new Vector3((-_posXBeginLine) +cellLocalScale.x/2f, 0, (-_posZBeginLine) + (a * (cellLocalScale.z+offSetLineBetween))+cellLocalScale.z/2f); 
+            cellOfLine.transform.localPosition = _lineBegin;
+            _cells.Add(cellOfLine);
 
-        obj.GetComponent<MeshRenderer>().material = cellMaterial;
+            for (int b = 1; b < fieldColumn; b++)
+            {
+                CellManager cellOfColumn = Instantiate(cellPrefab, transform);
+                float _posXBeginColumn = (_lineBegin.x) + (b * (cellLocalScale.x + offSetColumnBetween));
+                Vector3 _columnBegin = new Vector3(_posXBeginColumn, 0, _lineBegin.z);
+                cellOfColumn.transform.localPosition = _columnBegin;
+                _cells.Add(cellOfColumn);
+            }
+
+        }
     }
     
+    private void IntroductionCell()
+    {
+        foreach (var cell in _cells)
+        {
+            cell.InstantCell();
+            cell.CellBox.gameObject.GetComponent<MeshRenderer>().material = cellMaterial;
+            cell.InstantGem();
+        }
+    }
 }
