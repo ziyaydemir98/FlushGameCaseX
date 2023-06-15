@@ -7,16 +7,24 @@ using DG.Tweening;
 
 public class GemManager : MonoBehaviour
 {
-    #region Variables
+    #region Variables 
+    /// <summary>
+    /// Butun gem tiplerinin Inspectorden tanimladigim bir liste olustuyorum
+    /// </summary>
     [SerializeField] List<GemTypes> gemTypes;
-    public bool Growded;
-    public float Price;
+    [NonSerialized] public bool Growded;
+    [NonSerialized] public float Price;
     private float _growTiming;
     private CellManager _cellManager;
     int _randomValue;
     #endregion
 
     #region Gem Functions
+    /// <summary>
+    /// Gem objesine rastgele bir gem tipi secmek icin rastgele sayi olusturup listeden eleman cekiyorum
+    /// secilen gem tipinden gerekli degiskenleri Gem objesine tanimliyorum.
+    /// Gemin buyume asamasini baslatiyorum.
+    /// </summary>
     public void SetupGem()
     {
         ResetGem();
@@ -32,6 +40,9 @@ public class GemManager : MonoBehaviour
 
         StartCoroutine(GrowGem(gemTypes[_randomValue].TargetScale,_growTiming));
     }
+    /// <summary>
+    /// Gemler her aktiflestiginde sifirlama yapiyorum.
+    /// </summary>
     private void ResetGem()
     {
         transform.localPosition = Vector3.zero;
@@ -41,6 +52,12 @@ public class GemManager : MonoBehaviour
     #endregion
 
     #region Grow Coroutine Functions
+    /// <summary>
+    /// secilen gem tipindeki hedef scale'i ve zamana gore Coroutine baslatiyorum.
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="time"></param>
+    /// <returns></returns>
     private IEnumerator GrowGem(Vector3 target, float time)
     {
         transform.DOScale(target, time);
@@ -51,6 +68,9 @@ public class GemManager : MonoBehaviour
         yield return new WaitForSeconds(time * 0.75f);
         StopCoroutine(GrowGem(target, time));
     }
+    /// <summary>
+    /// Gem toplandigi anda buyume asamasini durduruyorum.
+    /// </summary>
     public void StopGrow()
     {
         if (Growded)

@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class FieldManager : MonoBehaviour
 {
+    #region Variables
+    /// <summary>
+    /// Hucre icin prefab dosyasi koyuyorum.
+    /// Hucrenin icerisindeki alt objeye materyal atamak icin materyal tanimliyorum.
+    /// Tarlanin kac Satir olacagini, kac sütun olacağını belirliyorum.
+    /// Tarlanin satir ve sütunları arasında kac birimlik bosluk olmasını istediğimi belirtiyorum.
+    /// </summary>
     [Header("Cell Properties")]
     [SerializeField] CellManager cellPrefab;
     [SerializeField] Material cellMaterial;
@@ -13,11 +20,22 @@ public class FieldManager : MonoBehaviour
     [SerializeField] float offSetColumnBetween;
 
     private List<CellManager> _cells = new List<CellManager>();
+    #endregion
+
     private void Start()
     {
         GridCreate();
         IntroductionCell();
     }
+
+    /// <summary>
+    /// Hücrelerin olusma algorıtması.
+    /// Önce Satırları gereklı X ve Z eksenı derinliğinde olusturuyorum.
+    /// Daha sonra olusan satırın sütunlarını olusturuyorum.
+    /// Tarla hücrelerini daha sonra kullanmak üzere bir listeye atiyorum.
+    /// </summary>
+
+    #region Functions
     private void GridCreate()
     {
         for (int a = 0; a < fieldLine; a++)
@@ -26,7 +44,7 @@ public class FieldManager : MonoBehaviour
             Vector3 cellLocalScale = cellOfLine.CellBox.transform.localScale;
             float _posZBeginLine = ((fieldLine * cellLocalScale.z) / 2f) + (((fieldLine - 1f) * offSetLineBetween) / 2f);
             float _posXBeginLine = ((fieldColumn * cellLocalScale.x) / 2f) + (((fieldColumn - 1f) * offSetColumnBetween) / 2f);
-            Vector3 _lineBegin = new Vector3((-_posXBeginLine) +cellLocalScale.x/2f, 0, (-_posZBeginLine) + (a * (cellLocalScale.z+offSetLineBetween))+cellLocalScale.z/2f); 
+            Vector3 _lineBegin = new Vector3((-_posXBeginLine) + cellLocalScale.x / 2f, 0, (-_posZBeginLine) + (a * (cellLocalScale.z + offSetLineBetween)) + cellLocalScale.z / 2f);
             cellOfLine.transform.localPosition = _lineBegin;
             _cells.Add(cellOfLine);
 
@@ -41,7 +59,11 @@ public class FieldManager : MonoBehaviour
 
         }
     }
-    
+
+
+    /// <summary>
+    /// Hucrelerin icerisinde gerekli fonksiyonlari hucrelerin hepsi olustuktan sonra baslatiyorum.
+    /// </summary>
     private void IntroductionCell()
     {
         foreach (var cell in _cells)
@@ -51,4 +73,6 @@ public class FieldManager : MonoBehaviour
             cell.InstantGem();
         }
     }
+    #endregion
+
 }

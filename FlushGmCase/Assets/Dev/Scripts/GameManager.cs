@@ -3,23 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
-    private static GameManager instance = null;
-    public static GameManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new GameObject("GameManager").AddComponent<GameManager>();
-            }
-            return instance;
-        }
-    }
-
+    #region Variables
     [HideInInspector] public UnityEvent OnMoneyChange = new();
-
 
     private int playerMoney;
     public int PlayerMoney
@@ -34,6 +21,8 @@ public class GameManager : MonoBehaviour
             OnMoneyChange.Invoke();
         }
     }
+    #endregion
+
     private void Awake()
     {
         LoadData();
@@ -42,6 +31,7 @@ public class GameManager : MonoBehaviour
     {
         SaveData();
     }
+    #region Functions
     private void LoadData()
     {
         playerMoney = PlayerPrefs.GetInt("PlayerMoney", 0);
@@ -50,4 +40,6 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("PlayerMoney", playerMoney);
     }
+    #endregion
+
 }

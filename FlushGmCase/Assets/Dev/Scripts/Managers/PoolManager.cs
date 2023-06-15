@@ -3,30 +3,27 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+public class PoolManager : MonoSingleton<PoolManager>
 {
-    private static PoolManager instance = null;
-    public static PoolManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new GameObject("PoolManager").AddComponent<PoolManager>();
-            }
-            return instance;
-        }
-    }
+    #region Variables
+    /// <summary>
+    /// OBJECT POOL DESIGN PATTERN
+    /// </summary>
     private Queue<GemManager> poolOfGem;
     [SerializeField] private GemManager gemPrefab;
     [SerializeField] private int poolSize;
-    
+    #endregion
+
+
     private void OnEnable()
     {
-        instance = this;
         InitializedPool();
     }
-
+    #region Functions
+    /// <summary>
+    /// Pooldan obje cekmek icin gerekli fonksiyon.
+    /// </summary>
+    /// <returns></returns>
     public GemManager CallGem()
     {
         GemManager gem = poolOfGem.Dequeue();
@@ -38,6 +35,10 @@ public class PoolManager : MonoBehaviour
         return gem;
 
     }
+    /// <summary>
+    /// Poola obje gondermek icin gerekli fonksiyon
+    /// </summary>
+    /// <param name="gem"></param>
     public void SendGem(GemManager gem)
     {
         poolOfGem.Enqueue(gem);
@@ -45,6 +46,9 @@ public class PoolManager : MonoBehaviour
         gem.transform.localPosition = Vector3.zero;
         gem.gameObject.SetActive(false);
     }
+    /// <summary>
+    /// Pool objectleri olusturmak icin gerekli fonksiyon
+    /// </summary>
     private void InitializedPool()
     {
         poolOfGem = new Queue<GemManager>();
@@ -55,6 +59,9 @@ public class PoolManager : MonoBehaviour
             poolOfGem.Enqueue(gem);
         }
     }
+    /// <summary>
+    /// Pool buyuklugu dustugunde daha fazla obje olusturmak icin gerekli fonksiyon.
+    /// </summary>
     private void SizeUp()
     {
         for (int i = 0; i < 100; i++)
@@ -64,4 +71,6 @@ public class PoolManager : MonoBehaviour
             poolOfGem.Enqueue(gem);
         }
     }
+    #endregion
+
 }

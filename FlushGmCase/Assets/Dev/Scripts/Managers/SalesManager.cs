@@ -5,13 +5,18 @@ using UnityEngine;
 public class SalesManager : MonoBehaviour
 {
     #region Variables
-    [SerializeField] float minSalePrice;
     PlayerManager _playerManager;
     public List<GemManager> SellGem = new List<GemManager>();
     int _count;
     #endregion
 
     #region Functions
+    /// <summary>
+    /// Player objesi satis bolgesine girdiginde cantasindaki listede ne kadar eleman varsa satis alaninin kendi listesine de ekliyorum.
+    /// Olusan listenin buyuklugunce bir sayisal deger tanimliyorum.
+    /// Sayisal deger buyuklugunce Satis rutini baslatiyorum.
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -34,6 +39,10 @@ public class SalesManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Player alandan ciktiginda alandaki listeyi ve sayisal degerleri sifirliyorum. Satis Rutinini durduruyorum
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -43,11 +52,18 @@ public class SalesManager : MonoBehaviour
             StopCoroutine(SellRotuine());
         }
     }
+    /// <summary>
+    /// Satis rutininde satilacak objenin fiyati hesaplaniyor.
+    /// Player objesindeki cantadan obje siliniyor.
+    /// Obje Pool'a gonderiliyor.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator SellRotuine()
     {
         CalculatePrice();
         yield return new WaitForSeconds(1 * 0.10f);
-        _playerManager.BagList.Remove(_playerManager.BagList[_count]);
+        UIManager.Instance.SetGemCountText(_playerManager.BagList[_count].name);
+        _playerManager.BagList.Remove(_playerManager.BagList[_count]); 
         PoolManager.Instance.SendGem(SellGem[_count]);
         _count--;
         if (_count < 0)
@@ -60,9 +76,12 @@ public class SalesManager : MonoBehaviour
         }
         
     }
+    /// <summary>
+    /// Urunun kac degere satilacagini burada hesapliyorum
+    /// </summary>
     private void CalculatePrice()
     {
-        int price = (int)((SellGem[_count].transform.localScale.x * 100) + minSalePrice);
+        int price = (int)((SellGem[_count].transform.localScale.x * 100) + SellGem[_count].Price);
         GameManager.Instance.PlayerMoney += price;
         Debug.Log(price);
     }
