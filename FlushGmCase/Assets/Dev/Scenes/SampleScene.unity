@@ -3001,10 +3001,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 4137244144394003198, guid: b854c7be56faeaf4498ca9adae4134f2, type: 3}
   cellMaterial: {fileID: 2100000, guid: 2a3886737f53d71458a0928657cfa3d3, type: 2}
-  fieldLine: 51
-  fieldColumn: 12
-  offSetLineBetween: 2.421
-  offSetColumnBetween: 3.12
+  fieldLine: 5
+  fieldColumn: 5
+  offSetLineBetween: 2
+  offSetColumnBetween: 2
 --- !u!1 &2081896928
 GameObject:
   m_ObjectHideFlags: 0
